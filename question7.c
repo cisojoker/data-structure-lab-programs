@@ -1,70 +1,92 @@
-#include<stdio.h>
 
-#define max 5
-int que[5];
-int top=-1;
+
+#include <stdio.h>
+#include <limits.h>
+#include <stdlib.h>
+#define MAX 5
+
+struct q
+{
+int data;
+};
+
+struct q queue[MAX];
+int front=-1;
 int rear=-1;
 int count=0;
-void insert(int number){
-    if(count==max){
-        printf("overflow sorry");
+
+void enqueue(int data)
+{
+    if (count==MAX)
+    {
+        printf("\nQueue is full\n");
+        return;
     }
-    else {
-        if(top==-1 && rear==-1)
-        {
-        top=0;
-        rear=0;   
-        }
-       else rear++;
-       
-        que[rear%max]=number;
-        count++;
+    else if (front == -1 && rear==-1)
+    {
+        front = rear = 0;
     }
+    else
+        rear++;
+   
+        queue[rear%MAX].data = data;
+    count++;
 }
-void dele(){
-    if(count==0) printf("underflow");
-    printf("the deleted element is:%d \n",que[top%max]);
-  
-    top++;
-    count--;
-}
-void display(){
-    if (count==0){
-        printf("empty");
+
+void dequeue()
+{
+    if (count==0)
+    {
+        printf("\nQueue is empty\n");
+        return;
     }
-    else {
-     for(int i=top;i<=rear;i++)
-     {
-         printf("%d ",que[i%max]);
-     }
-    }
-    printf("\n");
+    
+    printf("the deleted element is: %d\n",queue[front%MAX].data);
+        front++;
+        count--;
 }
-int main(){
-  printf("\nenter : \n 1 -> add \n2 -> remove \n 3 -> display \n");
-  int ch;
-  while(1){
-    printf("enter your choice \n");
-    scanf("%d",&ch);
-    switch(ch){
-      case 1:
-        int n;
-        printf("enter the number");
-        scanf("%d",&n);
-        insert(n);
-        break;
-      case 2:
-        dele();
-        break;
-      case 3:{
-        display();
-        break;
-      }
-      default:
-        printf("invalid choice \n");
-        break;      
+
+void display()
+{
+    if (count==0)
+    {
+        printf("\nQueue is Empty!!!\n");
+        return;
+    }
+    printf("\nQueue elements: ");
+    for(int i=front;i<=rear;i++)
+    {
+        printf("%d ",queue[i%MAX].data);
     }
 }
 
-return 0;
+int main()
+{
+    int choice, value;
+   
+    while (1)
+    {
+        printf("\n\n*** MENU ***\n");
+        printf("1. Insert\n2. Delete\n3. Display\n4. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            printf("Enter the value to be insert: ");
+            scanf("%d", &value);
+            enqueue(value);
+            break;
+        case 2:
+             dequeue();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            exit(0);
+        default:
+            printf("\nWrong selection!!! Please try again!!!\n");
+        }
+    }
 }
