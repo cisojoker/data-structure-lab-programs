@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <malloc.h>
-#include<stdlib.h>
 
 struct node{
     int data;
@@ -57,33 +56,30 @@ struct node *insert(struct node *start){
     ptr->prev=newnode;
     return start;
 }
-struct node *delete(struct node *start){
-    int j;
-    printf ("enter the value u want to delete");
-    scanf("%d",&j);
+struct node * delete(struct node *start){
+    int value;
+    printf("enter the value to be deleted");
+    scanf("%d",&value);
+    
     struct node *ptr;
     ptr=start;
-    while(ptr->data!=j ){
-        if(ptr->next=NULL){
-            printf("vlaue is not there");
-        }
+    
+    while(ptr->data!=value && ptr!=NULL){
         ptr=ptr->next;
     }
-    if(ptr->data==j){
-        if(ptr->prev==NULL){
-            ptr->next->prev=NULL;
-            start=ptr->next;
-        }
-        else if (ptr->next=NULL){
-            ptr->prev->next=NULL;
-        }
-        else{
+    if(ptr==NULL){
+        printf("element not found\n");
+    }
+    if (ptr->prev==NULL){
+        start=ptr->next;
+    }
+     if(ptr->next!=NULL){
+        ptr->next->prev=ptr->prev;;
+    }
+    if(ptr->prev!=NULL){
         ptr->prev->next=ptr->next;
-        ptr->next->prev=ptr->prev;
-        free(ptr);
     }
-    }
-   
+    free(ptr);
     return start;
 }
 void display(struct node *start){
@@ -108,10 +104,9 @@ int main(){
                start= insert(start);
                break;
          case 3:
-         start=delete(start);
-         break;
-         case 4:
-         exit(0);
+               start=  delete(start);
+                 break;
+         case 4:exit(0);
          case(5):display(start);
          break;
          default:
