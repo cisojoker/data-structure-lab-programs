@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <malloc.h>
-
+#include <stdlib.h>
 struct node{
     int data;
     struct node* prev;
@@ -16,14 +16,14 @@ struct node* crll(struct node * st){
    while(nva!=-1){
        if (start==NULL){
            
-          newnode=malloc(sizeof(struct node));
+          newnode=(struct node *)malloc(sizeof(struct node));
            newnode->data=nva;
            newnode->next=NULL;
            newnode->prev=NULL;
            start=newnode;
        }
        else{
-          newnode=malloc(sizeof(struct node));
+          newnode=(struct node *)malloc(sizeof(struct node));
           newnode->data=nva;
           struct node *ptr;
           ptr=start;
@@ -46,7 +46,7 @@ struct node *insert(struct node *start){
     struct node *ptr;
     ptr=start;
     struct node *newnode;
-    newnode =malloc(sizeof(struct node));
+          newnode=(struct node *)malloc(sizeof(struct node));
     newnode->data=n;
     while (ptr->data!=m)
         ptr=ptr->next;
@@ -56,7 +56,7 @@ struct node *insert(struct node *start){
     ptr->prev=newnode;
     return start;
 }
-struct node * delete(struct node *start){
+struct node *del(struct node *start){
     int value;
     printf("enter the value to be deleted");
     scanf("%d",&value);
@@ -104,7 +104,7 @@ int main(){
                start= insert(start);
                break;
          case 3:
-               start=  delete(start);
+               start=  del(start);
                  break;
          case 4:exit(0);
          case(5):display(start);
